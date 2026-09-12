@@ -1,0 +1,49 @@
+graph TD
+    %% Input Layer
+    DB[(Synthetic Student Database<br>SQLite / CSV)]
+    Input[Standardized Student Scenarios]
+
+    %% Baseline Single-LLM Pipeline
+    subgraph Baseline [Baseline Architecture: Single-LLM]
+        direction TB
+        SinglePrompt[Unified LLM Processing]
+        BaseOutput[Baseline Intervention Plan]
+        
+        Input --> SinglePrompt
+        SinglePrompt -.->|Unstructured Data Pull| DB
+        SinglePrompt --> BaseOutput
+    end
+
+    %% DropIn Multi-Agent Pipeline
+    subgraph DropIn [DropIn Architecture: Multi-Agent Pipeline]
+        direction TB
+        Orchestrator{LangGraph State Manager}
+        DataAgent[Data Retrieval Agent]
+        MCP((Model Context Protocol))
+        AnalysisAgent[Academic Analysis Agent]
+        PlanAgent[Intervention Planning Agent]
+        SwarmOutput[Multi-Agent Intervention Plan]
+
+        Input --> Orchestrator
+        Orchestrator --> DataAgent
+        DataAgent <-->|Structured Queries| MCP
+        MCP <--> DB
+        DataAgent -->|Passes Clean Data| AnalysisAgent
+        AnalysisAgent -->|Passes Risk Factors| PlanAgent
+        PlanAgent --> SwarmOutput
+    end
+
+    %% Evaluation Layer
+    subgraph Evaluation [Benchmarking & Research Evaluation]
+        direction TB
+        Metrics{Comparative Analysis}
+        Acc([Decision Accuracy & Logic])
+        Tools([Tool Usage Success])
+        Lat([Token Efficiency & Latency])
+        
+        BaseOutput --> Metrics
+        SwarmOutput --> Metrics
+        Metrics --- Acc
+        Metrics --- Tools
+        Metrics --- Lat
+    end
