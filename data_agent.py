@@ -7,7 +7,10 @@ from langgraph.graph import StateGraph, END
 
 # Import the Gemini SDK
 from google import genai
-from google.genai import types
+from google.genai import types, errors
+
+# Import Tenacity for rate-limiting
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
 # Import MCP Client libraries
 from mcp import ClientSession, StdioServerParameters
@@ -39,6 +42,11 @@ class DataRetrievalAgent:
         self.app = workflow.compile()
         self.mcp_session = None
 
+    @retry(
+        retry=retry_if_exception_type(errors.APIError),
+        wait=wait_exponential(multiplier=2, min=5, max=60),
+        stop=stop_after_attempt(5)
+    )
     async def call_llm(self, state: AgentState):
         """Node 1: The LLM thinks and decides if it needs to call a tool."""
         print("🤖 Agent is thinking...")
@@ -148,6 +156,7 @@ class DataRetrievalAgent:
                 answer = final_content.parts[0].text if final_content.parts else "No text returned."
                 print(answer)
                 print("="*50)
+                return answer
 
 if __name__ == "__main__":
     import sys
