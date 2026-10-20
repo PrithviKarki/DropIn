@@ -2,26 +2,41 @@ import os
 import json
 from google import genai
 from google.genai import types, errors
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception
+
+
+def _is_retryable_api_error(exc: BaseException) -> bool:
+    return isinstance(exc, errors.APIError) and getattr(exc, "code", None) in (429, 500, 503)
+
 
 # Build the Agent Class
 class InterventionPlanningAgent:
-    def __init__(self):
+    def __init__(self, model: str = "gemini-2.5-flash", max_output_tokens: int = 2048):
         self.client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-        self.model = 'gemini-2.5-flash' # You can upgrade this to pro for deeper reasoning later
-        
+        self.model = model
+        self.max_output_tokens = max_output_tokens
+        self.last_usage = {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "llm_calls": 0,
+        }
+
     @retry(
-        retry=retry_if_exception_type(errors.APIError),
-        wait=wait_exponential(multiplier=2, min=5, max=60),
-        stop=stop_after_attempt(5)
+        retry=retry_if_exception(_is_retryable_api_error),
+        wait=wait_exponential(multiplier=2, min=15, max=90),
+        stop=stop_after_attempt(6),
+        before_sleep=lambda retry_state: print(
+            f"⚠️  [API Rate Limit / Error] Attempt {retry_state.attempt_number} failed: {retry_state.outcome.exception()}. "
+            f"Waiting {round(retry_state.next_action.sleep, 1)}s before retry..."
+        ),
     )
     def draft_intervention_plan(self, risk_profile: dict) -> str:
         """
         Takes a structured Risk Profile dictionary and drafts an actionable advising plan.
         """
-        # Convert the Python dictionary back into a nicely formatted string for the LLM prompt
         profile_string = json.dumps(risk_profile, indent=2)
-        
+
         prompt = f"""
         You are the Intervention Planning Agent, acting as an empathetic academic advisor.
         Your job is to read the academic risk profile provided below and draft a concrete, 3-step 
@@ -38,33 +53,40 @@ class InterventionPlanningAgent:
         
         Format your response clearly using Markdown formatting.
         """
-        
+
         print("📝 Intervention Agent is drafting the plan...")
-        
-        # We don't enforce JSON here because we want a readable Markdown report!
+
         response = self.client.models.generate_content(
             model=self.model,
             contents=prompt,
             config=types.GenerateContentConfig(
-                temperature=0.7 # Higher temperature allows for more creative and empathetic writing
+                temperature=0.7,
+                max_output_tokens=self.max_output_tokens,
             ),
         )
-        
+
+        usage = getattr(response, "usage_metadata", None)
+        self.last_usage = {
+            "prompt_tokens": (getattr(usage, "prompt_token_count", 0) or 0) if usage else 0,
+            "completion_tokens": (getattr(usage, "candidates_token_count", 0) or 0) if usage else 0,
+            "total_tokens": (getattr(usage, "total_token_count", 0) or 0) if usage else 0,
+            "llm_calls": 1,
+        }
+
         return response.text
+
 
 # Built-in Testing Logic
 if __name__ == "__main__":
     from dotenv import load_dotenv
     import argparse
-    
+
     load_dotenv()
-    
-    # Setup argparse so you can test different scenarios from the terminal
+
     parser = argparse.ArgumentParser(description="Test the Intervention Agent")
     parser.add_argument("--scenario", type=str, default="attendance", choices=["attendance", "grades", "perfect"])
     args = parser.parse_args()
-    
-    # These represent the exact kind of dictionaries the Analysis Agent outputs!
+
     if args.scenario == "attendance":
         mock_profile = {
             "is_at_risk": True,
@@ -86,13 +108,14 @@ if __name__ == "__main__":
             "risk_summary": "The student has near perfect attendance and excellent grades.",
             "recommended_urgency": "Low"
         }
-        
+
     print(f"Testing Scenario: {args.scenario.upper()} RISK")
     print("-" * 50)
-    
+
     agent = InterventionPlanningAgent()
     plan = agent.draft_intervention_plan(mock_profile)
-    
+
     print("\n✅ Final Intervention Plan:\n")
     print(plan)
     print("=" * 50)
+    print(f"📊 Token Usage: {json.dumps(agent.last_usage, indent=2)}")

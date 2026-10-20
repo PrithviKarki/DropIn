@@ -1,0 +1,446 @@
+[
+  {
+    "student_id": 1,
+    "first_name": "Sophia",
+    "last_name": "Chen",
+    "major": "Computer Science",
+    "gpa": 3.85,
+    "attendance_percentage": 98,
+    "missed_assignments": 0,
+    "db_risk_level": "Low",
+    "academic_notes": "Sophia consistently submits high-quality work and actively participates in class discussions. Her understanding of complex concepts is excellent.",
+    "ground_truth_is_at_risk": false,
+    "ground_truth_urgency": "Low",
+    "ground_truth_primary_factor": "None",
+    "acceptable_risk_factors": [
+      "None"
+    ],
+    "required_intervention_themes": [
+      "enrichment_or_maintenance"
+    ]
+  },
+  {
+    "student_id": 2,
+    "first_name": "Liam",
+    "last_name": "Rodriguez",
+    "major": "Mechanical Engineering",
+    "gpa": 3.72,
+    "attendance_percentage": 95,
+    "missed_assignments": 1,
+    "db_risk_level": "Low",
+    "academic_notes": "Liam is a diligent student who always meets deadlines. He's making steady progress in advanced engineering courses.",
+    "ground_truth_is_at_risk": false,
+    "ground_truth_urgency": "Low",
+    "ground_truth_primary_factor": "None",
+    "acceptable_risk_factors": [
+      "None"
+    ],
+    "required_intervention_themes": [
+      "enrichment_or_maintenance"
+    ]
+  },
+  {
+    "student_id": 3,
+    "first_name": "Olivia",
+    "last_name": "Davis",
+    "major": "Psychology",
+    "gpa": 3.91,
+    "attendance_percentage": 99,
+    "missed_assignments": 0,
+    "db_risk_level": "Low",
+    "academic_notes": "Olivia is an exemplary student, turning in all assignments early and demonstrating a strong grasp of psychological theories. Her research proposal was outstanding.",
+    "ground_truth_is_at_risk": false,
+    "ground_truth_urgency": "Low",
+    "ground_truth_primary_factor": "None",
+    "acceptable_risk_factors": [
+      "None"
+    ],
+    "required_intervention_themes": [
+      "enrichment_or_maintenance"
+    ]
+  },
+  {
+    "student_id": 4,
+    "first_name": "Noah",
+    "last_name": "Miller",
+    "major": "Business Administration",
+    "gpa": 3.68,
+    "attendance_percentage": 97,
+    "missed_assignments": 0,
+    "db_risk_level": "Low",
+    "academic_notes": "Noah is performing very well in his core business courses. He's a reliable group member and consistently contributes valuable insights.",
+    "ground_truth_is_at_risk": false,
+    "ground_truth_urgency": "Low",
+    "ground_truth_primary_factor": "None",
+    "acceptable_risk_factors": [
+      "None"
+    ],
+    "required_intervention_themes": [
+      "enrichment_or_maintenance"
+    ]
+  },
+  {
+    "student_id": 5,
+    "first_name": "Emma",
+    "last_name": "Garcia",
+    "major": "Biology",
+    "gpa": 3.79,
+    "attendance_percentage": 96,
+    "missed_assignments": 0,
+    "db_risk_level": "Low",
+    "academic_notes": "Emma shows a keen interest in laboratory work and consistently scores high on exams. She's on track for a successful semester.",
+    "ground_truth_is_at_risk": false,
+    "ground_truth_urgency": "Low",
+    "ground_truth_primary_factor": "None",
+    "acceptable_risk_factors": [
+      "None"
+    ],
+    "required_intervention_themes": [
+      "enrichment_or_maintenance"
+    ]
+  },
+  {
+    "student_id": 6,
+    "first_name": "Ava",
+    "last_name": "Martinez",
+    "major": "English Literature",
+    "gpa": 3.88,
+    "attendance_percentage": 100,
+    "missed_assignments": 0,
+    "db_risk_level": "Low",
+    "academic_notes": "Ava is an exceptional writer and a thoughtful critic. She actively participates in all seminars and leads discussions effectively.",
+    "ground_truth_is_at_risk": false,
+    "ground_truth_urgency": "Low",
+    "ground_truth_primary_factor": "None",
+    "acceptable_risk_factors": [
+      "None"
+    ],
+    "required_intervention_themes": [
+      "enrichment_or_maintenance"
+    ]
+  },
+  {
+    "student_id": 41,
+    "first_name": "Oliver",
+    "last_name": "Thompson",
+    "major": "Business Administration",
+    "gpa": 2.85,
+    "attendance_percentage": 78,
+    "missed_assignments": 3,
+    "db_risk_level": "Medium",
+    "academic_notes": "Oliver shows potential but has submitted a few assignments late. Needs to improve consistency in effort and participation.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 43,
+    "first_name": "Liam",
+    "last_name": "Chen",
+    "major": "Computer Science",
+    "gpa": 2.7,
+    "attendance_percentage": 75,
+    "missed_assignments": 4,
+    "db_risk_level": "Medium",
+    "academic_notes": "Liam has inconsistent performance in programming labs. Advisor recommends seeking tutoring for foundational algorithms.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 45,
+    "first_name": "Noah",
+    "last_name": "Garcia",
+    "major": "Mechanical Engineering",
+    "gpa": 2.6,
+    "attendance_percentage": 70,
+    "missed_assignments": 5,
+    "db_risk_level": "Medium",
+    "academic_notes": "Noah's attendance has dipped slightly this semester, impacting his understanding of new material. Encourage him to re-engage with lectures.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 47,
+    "first_name": "James",
+    "last_name": "Brown",
+    "major": "Finance",
+    "gpa": 2.8,
+    "attendance_percentage": 77,
+    "missed_assignments": 3,
+    "db_risk_level": "Medium",
+    "academic_notes": "James is performing adequately, but could benefit from more active participation in class discussions and seeking clarification on complex financial models.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 49,
+    "first_name": "Benjamin",
+    "last_name": "Miller",
+    "major": "Political Science",
+    "gpa": 2.75,
+    "attendance_percentage": 73,
+    "missed_assignments": 4,
+    "db_risk_level": "Medium",
+    "academic_notes": "Benjamin struggles with analytical essays and needs to improve his research methodology. Advised to visit the writing center.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 51,
+    "first_name": "William",
+    "last_name": "Jones",
+    "major": "History",
+    "gpa": 2.9,
+    "attendance_percentage": 79,
+    "missed_assignments": 2,
+    "db_risk_level": "Medium",
+    "academic_notes": "William shows interest in the subject but sometimes delivers superficial analyses. Encourage deeper critical thinking and source engagement.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Low Attendance",
+    "acceptable_risk_factors": [
+      "Low Attendance"
+    ],
+    "required_intervention_themes": [
+      "attendance_check_in_or_schedule_review"
+    ]
+  },
+  {
+    "student_id": 52,
+    "first_name": "Mia",
+    "last_name": "Taylor",
+    "major": "Marketing",
+    "gpa": 2.65,
+    "attendance_percentage": 72,
+    "missed_assignments": 3,
+    "db_risk_level": "Medium",
+    "academic_notes": "Mia has submitted a few low-quality group project contributions. Needs to improve collaboration and individual accountability.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "Medium",
+    "ground_truth_primary_factor": "Low Attendance",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 55,
+    "first_name": "Logan",
+    "last_name": "Thomas",
+    "major": "Electrical Engineering",
+    "gpa": 2.5,
+    "attendance_percentage": 68,
+    "missed_assignments": 6,
+    "db_risk_level": "Medium",
+    "academic_notes": "Logan's attendance and assignment submissions are a concern this term. Recommended to meet with an academic advisor immediately to discuss support options.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 61,
+    "first_name": "Liam",
+    "last_name": "Gonzalez",
+    "major": "Business Administration",
+    "gpa": 1.7,
+    "attendance_percentage": 58,
+    "missed_assignments": 9,
+    "db_risk_level": "High",
+    "academic_notes": "Liam has consistently missed core lectures and failed to submit three critical assignments. Advisor has noted a complete lack of engagement in recent weeks.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 62,
+    "first_name": "Olivia",
+    "last_name": "Chen",
+    "major": "Psychology",
+    "gpa": 2.1,
+    "attendance_percentage": 65,
+    "missed_assignments": 6,
+    "db_risk_level": "High",
+    "academic_notes": "Olivia's grades are slipping due to sporadic attendance and late submissions. Professor reports a significant decline in her participation and focus during class.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 63,
+    "first_name": "Noah",
+    "last_name": "Schmidt",
+    "major": "Mechanical Engineering",
+    "gpa": 1.5,
+    "attendance_percentage": 45,
+    "missed_assignments": 12,
+    "db_risk_level": "High",
+    "academic_notes": "Noah has missed nearly half of his labs and multiple major exams. There's serious concern about his ability to pass the semester given his current performance.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 64,
+    "first_name": "Ava",
+    "last_name": "Patel",
+    "major": "Computer Science",
+    "gpa": 1.9,
+    "attendance_percentage": 50,
+    "missed_assignments": 8,
+    "db_risk_level": "High",
+    "academic_notes": "Ava shows up infrequently to programming lectures and has not completed the last two major coding projects. Instructor warns of failing grade if improvement is not immediate.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Low Attendance",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 66,
+    "first_name": "Sophia",
+    "last_name": "Kim",
+    "major": "Biology",
+    "gpa": 1.6,
+    "attendance_percentage": 48,
+    "missed_assignments": 10,
+    "db_risk_level": "High",
+    "academic_notes": "Sophia has stopped attending lab sessions entirely and failed to submit several lab reports. Academic probation is highly likely if no changes are made.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  },
+  {
+    "student_id": 67,
+    "first_name": "James",
+    "last_name": "Rossi",
+    "major": "Journalism",
+    "gpa": 2.0,
+    "attendance_percentage": 62,
+    "missed_assignments": 7,
+    "db_risk_level": "High",
+    "academic_notes": "James is falling behind on his reporting assignments and has shown a lack of interest in class discussions. Professor notes a lack of initiative and poor follow-through.",
+    "ground_truth_is_at_risk": true,
+    "ground_truth_urgency": "High",
+    "ground_truth_primary_factor": "Missed Assignments",
+    "acceptable_risk_factors": [
+      "Poor Grades",
+      "Low Attendance",
+      "Missed Assignments"
+    ],
+    "required_intervention_themes": [
+      "academic_tutoring_or_study_support",
+      "attendance_check_in_or_schedule_review",
+      "assignment_makeup_or_time_management"
+    ]
+  }
+]

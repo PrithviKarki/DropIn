@@ -1,0 +1,25 @@
+{
+  "student_id": 4,
+  "raw_student_data": "student_id | first_name | last_name | major | gpa | attendance_percentage | missed_assignments | risk_level | academic_notes\n--------------------------------------------------\n4 | Noah | Miller | Business Administration | 3.68 | 97 | 0 | Low | Noah is performing very well in his core business courses. He's a reliable group member and consistently contributes valuable insights.",
+  "risk_profile": {
+    "is_at_risk": false,
+    "primary_risk_factor": "None",
+    "risk_summary": "Noah is performing very well in his core business courses, maintaining a high GPA of 3.68 and 97% attendance. He has not missed any assignments and consistently contributes valuable insights.",
+    "recommended_urgency": "Low"
+  },
+  "intervention_plan": "As your academic advisor, Noah, I'm absolutely thrilled to see your outstanding performance! Your high GPA of 3.68, consistent attendance, and valuable contributions in your core business courses are truly commendable. It's clear you've developed excellent academic habits and are leveraging your strengths effectively.\n\nSince you're performing so well and are not currently at risk, our focus will be on maintaining this incredible momentum and exploring opportunities to further your excellence and prepare you for future success.\n\nHere is a concrete, 3-step action plan tailored to help you continue thriving:\n\n### Action Plan for Noah: Pursuing Excellence\n\n1.  **Strategize for Continued Academic Excellence & Skill Development:**\n    *   **Action:** Let's schedule a brief meeting in the coming weeks to discuss your current study strategies, time management techniques, and what you believe contributes most to your success. We can also identify any advanced courses or specialized electives that might further deepen your knowledge in areas of interest within business, ensuring you continue to be challenged and grow academically.\n    *   **Goal:** To proactively reinforce your successful habits and explore academic pathways that align with your long-term career aspirations, potentially leading to honors programs or advanced certifications.\n\n2.  **Proactively Engage with Career Services for Experiential Learning:**\n    *   **Action:** Given your strong academic foundation, it's an excellent time to visit the university's Career Services office. They can help you refine your resume, practice interview skills, and connect you with internship opportunities, co-ops, or part-time roles relevant to your business major. Early engagement can provide a significant advantage in securing competitive positions.\n    *   **Goal:** To translate your academic success into practical, real-world experience, build your professional network, and clarify your career interests through hands-on learning.\n\n3.  **Expand Your Professional Network & Leadership Footprint:**\n    *   **Action:** Research and consider joining a student professional organization related to your business major (e.g., a finance club, marketing association, or entrepreneurial group). Actively participating, and potentially seeking a leadership role, will provide invaluable networking opportunities with peers, faculty, and industry professionals, while also developing crucial leadership and teamwork skills.\n    *   **Goal:** To broaden your professional connections, gain leadership experience outside the classroom, and access mentorship opportunities that can accelerate your personal and professional development.",
+  "error": null,
+  "metrics": {
+    "steps_completed": [
+      "retrieve_data",
+      "analyze_risk",
+      "draft_plan"
+    ],
+    "node_latencies_sec": {
+      "retrieve_data": 3.689,
+      "analyze_risk": 1.799,
+      "draft_plan": 9.026
+    },
+    "total_pipeline_latency_sec": 14.52
+  }
+}

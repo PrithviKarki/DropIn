@@ -1,0 +1,340 @@
+{
+  "experiment_metadata": {
+    "project_title": "DropIn: Evaluating Multi-Agent Systems for Proactive Academic Advising",
+    "model_control": "gemini-2.5-flash",
+    "total_scenarios_planned": 20,
+    "last_updated": "2026-10-20T20:28:56.028053+00:00"
+  },
+  "scenarios_executed": {
+    "1": {
+      "ground_truth": {
+        "student_id": 1,
+        "first_name": "Sophia",
+        "last_name": "Chen",
+        "major": "Computer Science",
+        "gpa": 3.85,
+        "attendance_percentage": 98,
+        "missed_assignments": 0,
+        "db_risk_level": "Low",
+        "academic_notes": "Sophia consistently submits high-quality work and actively participates in class discussions. Her understanding of complex concepts is excellent.",
+        "ground_truth_is_at_risk": false,
+        "ground_truth_urgency": "Low",
+        "ground_truth_primary_factor": "None",
+        "acceptable_risk_factors": [
+          "None"
+        ],
+        "required_intervention_themes": [
+          "enrichment_or_maintenance"
+        ]
+      },
+      "baseline": {
+        "student_id": 1,
+        "risk_profile": {
+          "is_at_risk": false,
+          "primary_risk_factor": "None",
+          "recommended_urgency": "Low",
+          "risk_summary": "Sophia is an exemplary student who consistently performs at a high level, maintaining an excellent GPA and perfect assignment submission record. Her strong attendance and active class participation further highlight her dedication and deep understanding of course material."
+        },
+        "intervention_plan": "### Sophia Chen: Continued Excellence and Enrichment Plan\n\n**Step 1: Acknowledge and Encourage Continued Excellence**\n*   Schedule a brief meeting with Sophia to commend her outstanding academic performance, high attendance, and active participation. Reinforce the positive impact of her dedication and encourage her to maintain her current high standards.\n\n**Step 2: Explore Advanced Academic and Research Opportunities**\n*   Discuss opportunities for Sophia to further challenge herself, such as enrolling in advanced elective courses, participating in undergraduate research projects with faculty, or joining academic clubs related to Computer Science. Provide resources for identifying these opportunities.\n\n**Step 3: Foster Leadership and Mentorship Roles**\n*   Suggest that Sophia consider becoming a peer tutor, a teaching assistant for an introductory course, or taking on a leadership role in a student organization. This will allow her to apply her knowledge, develop leadership skills, and mentor other students.",
+        "metrics": {
+          "model": "gemini-2.5-flash",
+          "total_pipeline_latency_sec": 4.229,
+          "token_usage": {
+            "prompt_tokens": 289,
+            "completion_tokens": 275,
+            "total_tokens": 936,
+            "llm_calls": 1
+          }
+        },
+        "error": null
+      },
+      "multi_agent": {
+        "student_id": 1,
+        "raw_student_data": "The complete student profile for student ID 1 is:\nstudent_id: 1\nfirst_name: Sophia\nlast_name: Chen\nmajor: Computer Science\ngpa: 3.85\nattendance_percentage: 98\nmissed_assignments: 0\nrisk_level: Low\nacademic_notes: Sophia consistently submits high-quality work and actively participates in class discussions. Her understanding of complex concepts is excellent.",
+        "risk_profile": {
+          "is_at_risk": false,
+          "primary_risk_factor": "None",
+          "risk_summary": "Sophia is performing exceptionally well, maintaining a high GPA of 3.85 and 98% attendance. She consistently submits high-quality work and actively participates in class discussions.",
+          "recommended_urgency": "Low"
+        },
+        "intervention_plan": "Hello Sophia,\n\nIt's wonderful to see your exceptional academic performance! Your dedication, high GPA, excellent attendance, and active participation truly stand out. You're doing a fantastic job, and your hard work is clearly paying off.\n\nGiven your strong position, our focus now is on leveraging your current success to explore exciting new avenues for growth and excellence. Here is a 3-step action plan designed to help you continue thriving and elevate your academic and professional journey:\n\n### Your Personalized Action Plan: Maintaining Excellence and Pursuing Advanced Opportunities\n\n**Step 1: Explore Advanced Academic & Research Opportunities**\n*   **Action:** Meet with your academic advisor or a faculty mentor in your department to discuss opportunities for academic enrichment. Given your outstanding GPA, you are an excellent candidate for honors programs, independent study projects, or undergraduate research. These experiences can deepen your understanding of your field, develop advanced research skills, and provide valuable faculty mentorship.\n\n**Step 2: Proactive Career Development & Professional Networking**\n*   **Action:** Connect with the university's Career Services office to strategically plan your future. Utilize their resources to identify and apply for internships or co-op opportunities relevant to your major. Additionally, attend career fairs and networking events to build professional connections, gain industry insights, and explore potential career paths that align with your interests and strengths.\n\n**Step 3: Leadership and Peer Mentorship Engagement**\n*   **Action:** Consider joining an academic club or student organization related to your field of study, and actively seek out leadership roles within these groups. Your strong academic performance and participation make you an ideal candidate to contribute meaningfully. Additionally, explore opportunities to become a peer mentor or tutor, sharing your successful study strategies and academic insights with fellow students. This will further develop your leadership and communication skills while giving back to the community.",
+        "error": null,
+        "metrics": {
+          "model": "gemini-2.5-flash",
+          "steps_completed": [
+            "retrieve_data",
+            "analyze_risk",
+            "draft_plan"
+          ],
+          "node_latencies_sec": {
+            "retrieve_data": 3.113,
+            "analyze_risk": 2.315,
+            "draft_plan": 6.292
+          },
+          "token_usage": {
+            "prompt_tokens": 1449,
+            "completion_tokens": 577,
+            "total_tokens": 3253,
+            "llm_calls": 5,
+            "by_node": {
+              "retrieve_data": {
+                "prompt_tokens": 1006,
+                "completion_tokens": 132,
+                "total_tokens": 1285,
+                "llm_calls": 3
+              },
+              "analyze_risk": {
+                "prompt_tokens": 205,
+                "completion_tokens": 71,
+                "total_tokens": 565,
+                "llm_calls": 1
+              },
+              "draft_plan": {
+                "prompt_tokens": 238,
+                "completion_tokens": 374,
+                "total_tokens": 1403,
+                "llm_calls": 1
+              }
+            }
+          },
+          "mcp_tool_calls": [
+            {
+              "tool_name": "get_database_schema",
+              "arguments": {},
+              "success": true
+            },
+            {
+              "tool_name": "query_database",
+              "arguments": {
+                "sql_query": "SELECT * FROM students WHERE student_id = 1"
+              },
+              "success": true
+            }
+          ],
+          "mcp_tool_success": true,
+          "total_pipeline_latency_sec": 11.728
+        }
+      }
+    },
+    "2": {
+      "ground_truth": {
+        "student_id": 2,
+        "first_name": "Liam",
+        "last_name": "Rodriguez",
+        "major": "Mechanical Engineering",
+        "gpa": 3.72,
+        "attendance_percentage": 95,
+        "missed_assignments": 1,
+        "db_risk_level": "Low",
+        "academic_notes": "Liam is a diligent student who always meets deadlines. He's making steady progress in advanced engineering courses.",
+        "ground_truth_is_at_risk": false,
+        "ground_truth_urgency": "Low",
+        "ground_truth_primary_factor": "None",
+        "acceptable_risk_factors": [
+          "None"
+        ],
+        "required_intervention_themes": [
+          "enrichment_or_maintenance"
+        ]
+      },
+      "baseline": {
+        "student_id": 2,
+        "risk_profile": {
+          "is_at_risk": false,
+          "primary_risk_factor": "None",
+          "recommended_urgency": "Low",
+          "risk_summary": "Liam is an exemplary student, consistently demonstrating diligence and high performance in his advanced engineering courses. With a strong GPA and excellent attendance, he is making steady academic progress and is not currently struggling."
+        },
+        "intervention_plan": "### Intervention Plan: Liam Rodriguez\n\n**Step 1: Acknowledge and Reinforce Strong Performance**\n*   Schedule a brief meeting to commend Liam on his outstanding academic performance, high GPA, and consistent attendance. Reinforce the effectiveness of his current study habits and time management skills.\n\n**Step 2: Explore Advanced Academic and Career Opportunities**\n*   Discuss opportunities for further academic enrichment, such as undergraduate research, advanced elective courses, or participation in engineering design competitions. Explore potential internships or career pathways that align with his strong academic profile and interests.\n\n**Step 3: Proactive Resource Awareness and Future Planning**\n*   Ensure Liam is aware of all available university resources for career development, graduate school preparation, and student well-being, even if not immediately needed. Offer to connect him with faculty mentors in his field to discuss long-term academic and professional goals.",
+        "metrics": {
+          "model": "gemini-2.5-flash",
+          "total_pipeline_latency_sec": 4.975,
+          "token_usage": {
+            "prompt_tokens": 289,
+            "completion_tokens": 268,
+            "total_tokens": 1137,
+            "llm_calls": 1
+          }
+        },
+        "error": null
+      },
+      "multi_agent": {
+        "student_id": 2,
+        "raw_student_data": "student_id | first_name | last_name | major | gpa | attendance_percentage | missed_assignments | risk_level | academic_notes\n--------------------------------------------------\n2 | Liam | Rodriguez | Mechanical Engineering | 3.72 | 95 | 1 | Low | Liam is a diligent student who always meets deadlines. He's making steady progress in advanced engineering courses.\n",
+        "risk_profile": {
+          "is_at_risk": false,
+          "primary_risk_factor": "None",
+          "risk_summary": "Liam is a diligent student with a strong GPA of 3.72 and excellent attendance at 95%. He has only missed one assignment, indicating consistent academic performance.",
+          "recommended_urgency": "Low"
+        },
+        "intervention_plan": "Hello Liam, it's wonderful to see your strong academic performance! Your dedication and hard work are truly paying off, reflected in your excellent GPA, attendance, and consistent assignment submission. It's clear you're building a solid foundation for future success.\n\nSince you're excelling and not currently facing any academic risks, our focus now shifts to helping you continue this impressive trajectory and explore opportunities for even greater achievement and personal growth. Here is a 3-step action plan designed to help you leverage your strengths and pursue excellence:\n\n### Your Action Plan for Continued Excellence:\n\n1.  **Explore Advanced Academic and Research Opportunities:**\n    *   **Action:** Given your strong academic record, I encourage you to meet with your departmental advisor or a faculty member whose research interests you. Discuss opportunities for undergraduate research, enrolling in honors courses, or pursuing a departmental honors program. This can deepen your knowledge, enhance your resume, and provide valuable experience for graduate school or specialized career paths.\n\n2.  **Proactive Career Development and Experiential Learning:**\n    *   **Action:** Connect with the university's Career Services office to explore internship opportunities, co-op programs, or part-time positions relevant to your major. Gaining practical, real-world experience now can help you clarify your career goals, build your professional network, and make you a highly competitive candidate upon graduation. They can also assist with resume building and interview skills.\n\n3.  **Cultivate Leadership and Mentorship Roles:**\n    *   **Action:** Consider joining or taking on a leadership role in an academic club, professional organization, or even a peer tutoring program related to your field of study. This is an excellent way to further develop your leadership, teamwork, and communication skills, while also contributing to the academic community and potentially mentoring other students.\n\nLiam, you're doing exceptionally well, and I'm here to support you in reaching even higher. Let's work together to make the most of your academic journey!",
+        "error": null,
+        "metrics": {
+          "model": "gemini-2.5-flash",
+          "steps_completed": [
+            "retrieve_data",
+            "analyze_risk",
+            "draft_plan"
+          ],
+          "node_latencies_sec": {
+            "retrieve_data": 33.899,
+            "analyze_risk": 1.698,
+            "draft_plan": 6.458
+          },
+          "token_usage": {
+            "prompt_tokens": 1436,
+            "completion_tokens": 596,
+            "total_tokens": 3210,
+            "llm_calls": 5,
+            "by_node": {
+              "retrieve_data": {
+                "prompt_tokens": 1005,
+                "completion_tokens": 122,
+                "total_tokens": 1306,
+                "llm_calls": 3
+              },
+              "analyze_risk": {
+                "prompt_tokens": 195,
+                "completion_tokens": 64,
+                "total_tokens": 438,
+                "llm_calls": 1
+              },
+              "draft_plan": {
+                "prompt_tokens": 236,
+                "completion_tokens": 410,
+                "total_tokens": 1466,
+                "llm_calls": 1
+              }
+            }
+          },
+          "mcp_tool_calls": [
+            {
+              "tool_name": "get_database_schema",
+              "arguments": {},
+              "success": true
+            },
+            {
+              "tool_name": "query_database",
+              "arguments": {
+                "sql_query": "SELECT * FROM students WHERE student_id = 2"
+              },
+              "success": true
+            }
+          ],
+          "mcp_tool_success": true,
+          "total_pipeline_latency_sec": 42.063
+        }
+      }
+    },
+    "3": {
+      "ground_truth": {
+        "student_id": 3,
+        "first_name": "Olivia",
+        "last_name": "Davis",
+        "major": "Psychology",
+        "gpa": 3.91,
+        "attendance_percentage": 99,
+        "missed_assignments": 0,
+        "db_risk_level": "Low",
+        "academic_notes": "Olivia is an exemplary student, turning in all assignments early and demonstrating a strong grasp of psychological theories. Her research proposal was outstanding.",
+        "ground_truth_is_at_risk": false,
+        "ground_truth_urgency": "Low",
+        "ground_truth_primary_factor": "None",
+        "acceptable_risk_factors": [
+          "None"
+        ],
+        "required_intervention_themes": [
+          "enrichment_or_maintenance"
+        ]
+      },
+      "baseline": {
+        "student_id": 3,
+        "risk_profile": {
+          "is_at_risk": false,
+          "primary_risk_factor": "None",
+          "recommended_urgency": "Low",
+          "risk_summary": "Olivia is an exemplary student who consistently excels in her coursework, maintaining a high GPA and perfect attendance. She demonstrates a strong understanding of her major and actively engages with her studies, showing no signs of academic struggle."
+        },
+        "intervention_plan": "1.  **Continue Academic Excellence & Explore Advanced Opportunities**: Olivia should continue to leverage her strong academic performance. She is encouraged to explore advanced coursework, honors programs, or independent study opportunities that align with her research interests in Psychology.2.  **Seek Mentorship & Leadership Roles**: Given her strong grasp of theories and outstanding research proposal, Olivia would benefit from seeking out faculty mentorship for research projects or taking on leadership roles in student organizations related to Psychology. This will further develop her professional skills and network.3.  **Future Planning & Graduate School Preparation**: Olivia should begin exploring potential career paths or graduate school programs that align with her interests. Meeting with a career counselor or faculty advisor to discuss application processes, GRE preparation, and research opportunities would be beneficial for her long-term academic and professional goals.",
+        "metrics": {
+          "model": "gemini-2.5-flash",
+          "total_pipeline_latency_sec": 4.936,
+          "token_usage": {
+            "prompt_tokens": 293,
+            "completion_tokens": 256,
+            "total_tokens": 1298,
+            "llm_calls": 1
+          }
+        },
+        "error": null
+      },
+      "multi_agent": {
+        "student_id": 3,
+        "raw_student_data": "student_id | first_name | last_name | major | gpa | attendance_percentage | missed_assignments | risk_level | academic_notes\n--------------------------------------------------\n3 | Olivia | Davis | Psychology | 3.91 | 99 | 0 | Low | Olivia is an exemplary student, turning in all assignments early and demonstrating a strong grasp of psychological theories. Her research proposal was outstanding.",
+        "risk_profile": {
+          "is_at_risk": false,
+          "primary_risk_factor": "None",
+          "risk_summary": "Olivia is an exemplary student with a high GPA of 3.91, 99% attendance, and no missed assignments. She consistently performs well and demonstrates a strong grasp of her subject matter.",
+          "recommended_urgency": "Low"
+        },
+        "intervention_plan": "Hello Olivia,\n\nIt's truly wonderful to review your academic profile! Your high GPA of 3.91, 99% attendance, and consistent performance are outstanding achievements and reflect a strong commitment to your studies. You are clearly an exemplary student with a firm grasp of your subject matter.\n\nGiven your exceptional performance, our focus will be on building upon this strong foundation and exploring opportunities for advanced growth and excellence. Here is a 3-step action plan designed to help you continue thriving and elevate your academic journey:\n\n---\n\n### **Action Plan for Olivia: Sustaining Excellence and Pursuing Advanced Opportunities**\n\n**Step 1: Sustain Academic Momentum and Deepen Engagement**\n*   **Action:** Continue to leverage your excellent study habits, active class participation, and proactive approach to learning. Seek opportunities to delve deeper into specific areas of interest within your current coursework, perhaps by engaging in advanced readings, independent projects, or in-depth discussions with professors about topics that particularly intrigue you.\n*   **Goal:** To not only maintain your outstanding academic standing but also to further cultivate your intellectual curiosity and deepen your expertise in your chosen field, preparing you for more advanced academic challenges.\n\n**Step 2: Explore and Engage in Enrichment Opportunities**\n*   **Action:** Research and actively pursue opportunities that complement your academic strengths. This could include applying for undergraduate research assistantships with faculty, joining an honors program, seeking relevant internships in your field, or taking on leadership roles in academic clubs or professional organizations.\n*   **Goal:** To gain practical experience, develop specialized skills beyond the classroom, expand your professional network, and enhance your academic and professional profile for future endeavors such as graduate school, competitive scholarships, or targeted career paths.\n\n**Step 3: Strategic Future Planning and Mentorship**\n*   **Action:** Schedule meetings with your academic advisor, faculty mentors, and career services professionals to discuss your long-term academic and career aspirations. Work with them to identify potential pathways for graduate studies, specific career fields, and to connect with professionals or alumni who can offer valuable insights and mentorship.\n*   **Goal:** To develop a clear, strategic roadmap for your post-graduation journey, identify key resources and mentors who can provide guidance, and proactively position yourself for success in your desired academic or professional future.",
+        "error": null,
+        "metrics": {
+          "model": "gemini-2.5-flash",
+          "steps_completed": [
+            "retrieve_data",
+            "analyze_risk",
+            "draft_plan"
+          ],
+          "node_latencies_sec": {
+            "retrieve_data": 3.792,
+            "analyze_risk": 1.854,
+            "draft_plan": 7.006
+          },
+          "token_usage": {
+            "prompt_tokens": 1450,
+            "completion_tokens": 673,
+            "total_tokens": 3669,
+            "llm_calls": 5,
+            "by_node": {
+              "retrieve_data": {
+                "prompt_tokens": 1009,
+                "completion_tokens": 126,
+                "total_tokens": 1495,
+                "llm_calls": 3
+              },
+              "analyze_risk": {
+                "prompt_tokens": 199,
+                "completion_tokens": 75,
+                "total_tokens": 498,
+                "llm_calls": 1
+              },
+              "draft_plan": {
+                "prompt_tokens": 242,
+                "completion_tokens": 472,
+                "total_tokens": 1676,
+                "llm_calls": 1
+              }
+            }
+          },
+          "mcp_tool_calls": [
+            {
+              "tool_name": "get_database_schema",
+              "arguments": {},
+              "success": true
+            },
+            {
+              "tool_name": "query_database",
+              "arguments": {
+                "sql_query": "SELECT * FROM students WHERE student_id = 3"
+              },
+              "success": true
+            }
+          ],
+          "mcp_tool_success": true,
+          "total_pipeline_latency_sec": 12.66
+        }
+      }
+    }
+  }
+}

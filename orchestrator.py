@@ -35,7 +35,7 @@ class DropInState(TypedDict):
     metrics: Dict[str, Any]
 
 
-def create_initial_state(student_id: int) -> DropInState:
+def create_initial_state(student_id: int, model: str = "gemini-2.5-flash") -> DropInState:
     """Helper to initialize a clean DropInState before starting the LangGraph run."""
     return {
         "student_id": student_id,
@@ -44,9 +44,40 @@ def create_initial_state(student_id: int) -> DropInState:
         "intervention_plan": None,
         "error": None,
         "metrics": {
+            "model": model,
             "steps_completed": [],
             "node_latencies_sec": {},
+            "token_usage": {
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "total_tokens": 0,
+                "llm_calls": 0,
+                "by_node": {},
+            },
+            "mcp_tool_calls": [],
+            "mcp_tool_success": False,
         },
+    }
+
+
+def _accumulate_tokens(metrics: Dict[str, Any], node_name: str, usage: Dict[str, Any]):
+    """Helper to aggregate per-node token usage into state['metrics']['token_usage']."""
+    tu = metrics.setdefault("token_usage", {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "llm_calls": 0,
+        "by_node": {},
+    })
+    tu["prompt_tokens"] += usage.get("prompt_tokens", 0)
+    tu["completion_tokens"] += usage.get("completion_tokens", 0)
+    tu["total_tokens"] += usage.get("total_tokens", 0)
+    tu["llm_calls"] += usage.get("llm_calls", 0)
+    tu.setdefault("by_node", {})[node_name] = {
+        "prompt_tokens": usage.get("prompt_tokens", 0),
+        "completion_tokens": usage.get("completion_tokens", 0),
+        "total_tokens": usage.get("total_tokens", 0),
+        "llm_calls": usage.get("llm_calls", 0),
     }
 
 
@@ -58,18 +89,24 @@ async def retrieve_data_node(state: DropInState) -> Dict[str, Any]:
     Writes: state['raw_student_data'], state['metrics'], state['error']
     """
     student_id = state["student_id"]
-    print(f"\n[ORCHESTRATOR -> NODE 1: Data Retrieval] Fetching profile for Student ID {student_id}...")
+    model = state.get("metrics", {}).get("model", "gemini-2.5-flash")
+    print(f"\n[ORCHESTRATOR -> NODE 1: Data Retrieval] Fetching profile for Student ID {student_id} (Model: {model})...")
     start_time = time.perf_counter()
 
     try:
-        agent = DataRetrievalAgent()
+        agent = DataRetrievalAgent(model=model)
         query = f"Get the complete student profile for student ID {student_id}."
         raw_data = await agent.run(query)
         elapsed = round(time.perf_counter() - start_time, 3)
 
-        metrics = dict(state.get("metrics", {}))
+        metrics = json.loads(json.dumps(state.get("metrics", {})))
         metrics.setdefault("steps_completed", []).append("retrieve_data")
         metrics.setdefault("node_latencies_sec", {})["retrieve_data"] = elapsed
+        _accumulate_tokens(metrics, "retrieve_data", agent.last_usage)
+        metrics["mcp_tool_calls"] = agent.last_usage.get("mcp_tool_calls", [])
+        metrics["mcp_tool_success"] = bool(
+            agent.last_usage.get("mcp_tool_success", False) and len(metrics["mcp_tool_calls"]) > 0
+        )
 
         if not raw_data or "no text returned" in raw_data.lower():
             return {
@@ -83,8 +120,14 @@ async def retrieve_data_node(state: DropInState) -> Dict[str, Any]:
             "metrics": metrics,
         }
     except Exception as e:
+        sub_msg = str(e)
+        if hasattr(e, "exceptions") and e.exceptions:
+            sub = e.exceptions[0]
+            if hasattr(sub, "exceptions") and sub.exceptions:
+                sub = sub.exceptions[0]
+            sub_msg = f"{type(sub).__name__}: {sub}"
         return {
-            "error": f"Exception in retrieve_data_node: {str(e)}",
+            "error": f"Exception in retrieve_data_node: {sub_msg}",
         }
 
 
@@ -94,17 +137,19 @@ async def analyze_risk_node(state: DropInState) -> Dict[str, Any]:
     Reads: state['raw_student_data']
     Writes: state['risk_profile'], state['metrics'], state['error']
     """
-    print("\n[ORCHESTRATOR -> NODE 2: Academic Analysis] Evaluating student risk factors...")
+    model = state.get("metrics", {}).get("model", "gemini-2.5-flash")
+    print(f"\n[ORCHESTRATOR -> NODE 2: Academic Analysis] Evaluating student risk factors (Model: {model})...")
     start_time = time.perf_counter()
 
     try:
-        agent = AcademicAnalysisAgent()
+        agent = AcademicAnalysisAgent(model=model)
         risk_profile = agent.analyze_student_data(state["raw_student_data"])
         elapsed = round(time.perf_counter() - start_time, 3)
 
-        metrics = dict(state.get("metrics", {}))
+        metrics = json.loads(json.dumps(state.get("metrics", {})))
         metrics.setdefault("steps_completed", []).append("analyze_risk")
         metrics.setdefault("node_latencies_sec", {})["analyze_risk"] = elapsed
+        _accumulate_tokens(metrics, "analyze_risk", agent.last_usage)
 
         if not risk_profile:
             return {
@@ -129,17 +174,19 @@ async def draft_plan_node(state: DropInState) -> Dict[str, Any]:
     Reads: state['risk_profile']
     Writes: state['intervention_plan'], state['metrics'], state['error']
     """
-    print("\n[ORCHESTRATOR -> NODE 3: Intervention Planning] Drafting targeted intervention plan...")
+    model = state.get("metrics", {}).get("model", "gemini-2.5-flash")
+    print(f"\n[ORCHESTRATOR -> NODE 3: Intervention Planning] Drafting targeted intervention plan (Model: {model})...")
     start_time = time.perf_counter()
 
     try:
-        agent = InterventionPlanningAgent()
+        agent = InterventionPlanningAgent(model=model)
         plan = agent.draft_intervention_plan(state["risk_profile"])
         elapsed = round(time.perf_counter() - start_time, 3)
 
-        metrics = dict(state.get("metrics", {}))
+        metrics = json.loads(json.dumps(state.get("metrics", {})))
         metrics.setdefault("steps_completed", []).append("draft_plan")
         metrics.setdefault("node_latencies_sec", {})["draft_plan"] = elapsed
+        _accumulate_tokens(metrics, "draft_plan", agent.last_usage)
 
         if not plan:
             return {
@@ -240,16 +287,20 @@ def build_orchestrator_graph():
 
 
 # Step 4: CLI Runner & Execution Trace Output
-async def run_orchestrator(student_id: int, save_trace: Optional[str] = None) -> DropInState:
+async def run_orchestrator(
+    student_id: int,
+    save_trace: Optional[str] = None,
+    model: str = "gemini-2.5-flash",
+) -> DropInState:
     """
     Executes the full Master LangGraph pipeline for a given student_id and prints the execution trace.
     """
     print("=" * 75)
-    print(f"🌐 STARTING DROPIN LANGGRAPH ORCHESTRATOR | STUDENT ID: {student_id}")
+    print(f"🌐 STARTING DROPIN LANGGRAPH ORCHESTRATOR | STUDENT ID: {student_id} | MODEL: {model}")
     print("=" * 75)
 
     app = build_orchestrator_graph()
-    initial_state = create_initial_state(student_id)
+    initial_state = create_initial_state(student_id, model=model)
 
     pipeline_start = time.perf_counter()
     final_state: DropInState = await app.ainvoke(initial_state)
@@ -265,6 +316,8 @@ async def run_orchestrator(student_id: int, save_trace: Optional[str] = None) ->
     print(f"Steps Completed  : {' -> '.join(final_state['metrics'].get('steps_completed', [])) or 'None'}")
     print(f"Node Latencies   : {json.dumps(final_state['metrics'].get('node_latencies_sec', {}))}")
     print(f"Total Latency    : {total_latency}s")
+    print(f"Token Usage      : {json.dumps(final_state['metrics'].get('token_usage', {}))}")
+    print(f"MCP Tool Success : {final_state['metrics'].get('mcp_tool_success')}")
 
     if final_state.get("error"):
         print(f"Pipeline Status  : ❌ HALTED ({final_state['error']})")
@@ -292,7 +345,8 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Run the DropIn Master LangGraph Orchestrator")
     parser.add_argument("--id", type=int, default=4, help="Student ID to process through the LangGraph pipeline")
+    parser.add_argument("--model", type=str, default="gemini-2.5-flash", help="Gemini model to use across all nodes")
     parser.add_argument("--save-trace", type=str, default=None, help="Optional JSON file path to save the execution trace")
     args = parser.parse_args()
 
-    asyncio.run(run_orchestrator(student_id=args.id, save_trace=args.save_trace))
+    asyncio.run(run_orchestrator(student_id=args.id, save_trace=args.save_trace, model=args.model))
