@@ -2,7 +2,8 @@ import os
 import json
 from pydantic import BaseModel, Field
 from google import genai
-from google.genai import types
+from google.genai import types, errors
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
 # 1. Define the Pydantic Schema
 class RiskProfile(BaseModel):
@@ -17,6 +18,11 @@ class AcademicAnalysisAgent:
         self.client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
         self.model = 'gemini-2.5-flash'
         
+    @retry(
+        retry=retry_if_exception_type(errors.APIError),
+        wait=wait_exponential(multiplier=2, min=5, max=60),
+        stop=stop_after_attempt(5)
+    )
     def analyze_student_data(self, raw_data: str) -> dict:
         """
         Takes raw student data from the database and returns a structured Risk Profile dictionary.
